@@ -5,6 +5,7 @@
 int main()
 {
     printf("This is the beginning of the program!\n\n");
+    int stat;
 
     for (int i = 0; i < 2; i++)
     {
