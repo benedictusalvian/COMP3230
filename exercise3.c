@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
     if (argc - 1 != 3)
     {
-        printf("Error: The number of input integers now is %d. Please input 3 integers.\n\n", argc - 1);
+        printf("Error: The number of input integers now is %d. Please input 3 integers.\n", argc - 1);
         return 0;
     }
     int shmid;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
             shmc[i - 1] = atoi(argv[i]);
         }
         qsort(shmc, 3, sizeof(int), compare);
-        printf("Child process ID: %d; Sorting results: %d, %d, %d.\n", getpid(), shmc[0], shmc[1], shmc[2]);
+        printf("Child process ID: %d; Sorting results: %d, %d, %d.\n\n", getpid(), shmc[0], shmc[1], shmc[2]);
         shmdt(shmc);
         return 0;
     }
