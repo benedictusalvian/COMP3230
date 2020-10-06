@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
             shmc[i - 1] = atoi(argv[i]);
         }
         qsort(shmc, 3, sizeof(int), compare);
-        printf(shmc);
+        printf("%d %d %d", shmc[0], shmc[1], shmc[2]);
         return 0;
     }
     else
