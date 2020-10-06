@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
     if (argc - 1 != 3)
     {
-        printf("Error: The number of input integers now is %d. Please input 3 integers.", argc - 1);
+        printf("Error: The number of input integers now is %d. Please input 3 integers.\n\n", argc - 1);
         return 0;
     }
     int shmid;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
     pid_t fpid = fork();
     if (fpid < 0)
-        printf("Error in executing fork!");
+        printf("Error in executing fork!\n");
     else if (fpid == 0)
     {
         shmc = shmat(shmid, 0, 0);
@@ -38,11 +38,27 @@ int main(int argc, char *argv[])
             shmc[i - 1] = atoi(argv[i]);
         }
         qsort(shmc, 3, sizeof(int), compare);
-        printf("%d %d %d", shmc[0], shmc[1], shmc[2]);
+        printf("Child process ID: %d; Sorting results: %d, %d, %d.\n", getpid(), shmc[0], shmc[1], shmc[2]);
+        shmdt(shmc);
         return 0;
     }
+
     else
     {
         wait(NULL);
+
+        shmp = shmat(shmid, 0, 0);
+        char num1[11];
+        char num2[11];
+        sprintf(num1, "%d", shmp[0]);
+        sprintf(num2, "%d", shmp[1]);
+
+        printf("Parent process ID: %d; Calculate the sum of the two smallest arguments: %d, %d.\n", getpid(), shmp[0], shmp[1]);
+        shmdt(shmp);
+        shmctl(shmid, IPC_RMID, NULL);
+
+        char *arg_vec[] = {"./para_sum", num1, num2, NULL};
+        execv("./para_sum", arg_vec);
     }
+    return 0;
 }
