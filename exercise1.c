@@ -5,7 +5,8 @@
 int main()
 {
     printf("This is the beginning of the program!\n\n");
-    int stat;
+    int status;
+    pid_t rootpid = getpid();
 
     for (int i = 0; i < 2; i++)
     {
@@ -19,10 +20,14 @@ int main()
         else
         {
             pid_t cpid = wait(&status);
-            printf("The exited child process ID now is %d, whose parent process ID is %d.", cpid, getpid());
+            printf("The exited child process ID now is %d, whose parent process ID is %d.\n", cpid, getpid());
         }
     }
 
-    printf("This is the END of program!");
+    if (rootpid == getpid())
+    {
+        printf("The final exited process ID now is %d.\n\n", rootpid);
+        printf("This is the END of program!");
+    }
     return 0;
 }
