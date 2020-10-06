@@ -13,14 +13,15 @@ int main()
             printf("Error in executing fork!");
         else if (fpid == 0)
         {
-            printf("I am %d. My parent is %d. \n", getpid(), getppid());
+            exit(0);
         }
         else
         {
-            wait(NULL);
+            pid_t cpid = wait(&status);
+            printf("The exited child process ID now is %d, whose parent process ID is %d.", cpid, getpid());
         }
     }
 
-    printf("This is the END of program. \n\n");
+    printf("This is the END of program!");
     return 0;
 }
