@@ -15,7 +15,7 @@ int main()
             printf("Error in executing fork!");
         else if (fpid == 0)
         {
-            return 0;
+            //Do nothing.
         }
         else
         {
@@ -27,7 +27,7 @@ int main()
     if (rootpid == getpid())
     {
         printf("The final exited process ID now is %d.\n\n", rootpid);
-        printf("This is the END of program!");
+        printf("This is the END of program!\n");
     }
     return 0;
 }
