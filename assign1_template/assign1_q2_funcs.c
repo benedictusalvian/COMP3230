@@ -284,7 +284,7 @@ void mergesort4Way4Processes(int *array, int low, int high)
             else
             {
                 mergesort_4_way_rec(sharedArray, mid3, high);
-                printf("Process ID: %d; Merged %d integers: ", getpid(), high - low);
+                printf("Process ID: %d; Sorted %d integers: ", getpid(), high - mid3);
                 printArray(sharedArray, mid3, high);
 
                 wait(NULL);
@@ -292,6 +292,8 @@ void mergesort4Way4Processes(int *array, int low, int high)
                 wait(NULL);
 
                 merge_4_way(sharedArray, low, mid1, mid2, mid3, high);
+                printf("Process ID: %d; Merged %d integers: ", getpid(), high - low);
+                printArray(sharedArray, low, high);
 
                 for (int i = low; i < high; i++)
                     array[i] = sharedArray[i];
