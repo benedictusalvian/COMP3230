@@ -240,7 +240,7 @@ void mergesort4Way4Processes(int *array, int low, int high)
 
     int mid1 = (high - low) / 4;
     int mid2 = (high - low) / 2;
-    int mid3 = (high - low) * (3 / 4);
+    int mid3 = mid1 + mid2;
 
     pid2 = fork();
 
