@@ -347,9 +347,9 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
                 {
                     recursiveMergesort(array, mid3, high, max_num);
 
-                    wait(NULL);
-                    wait(NULL);
-                    wait(NULL);
+                    waitpid(pid2, NULL, 0);
+                    waitpid(pid3, NULL, 0);
+                    waitpid(pid4, NULL, 0);
 
                     merge_4_way(array, low, mid1, mid2, mid3, high);
                     //printf("Process ID: %d; Merged %d integers: ", getpid(), size);
