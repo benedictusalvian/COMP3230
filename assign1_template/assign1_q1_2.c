@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
 		{
 			printf("Receive a SIGCONT.\n");
 			printf("Child process B ID: %d.\n", getpid());
-			differ = shmat(shmid, 0, 0);
 
 			if (differ[2] > 0)
 				printf("The 3rd argument is larger than the 1st argument.\n\n");
@@ -51,7 +50,6 @@ int main(int argc, char *argv[])
 			{
 				printf("Receive a SIGCONT.\n");
 				printf("Child process A ID: %d.\n", getpid());
-				differ = shmat(shmid, 0, 0);
 				differ[2] = differ[0] + differ[1];
 				printf("Sum of differences: %d.\n", differ[2]);
 

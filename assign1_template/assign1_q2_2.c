@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 	printf("End timing parallel 4-way merge-sort.\n");
 	uint64_t delta_ms = (end.tv_sec - start.tv_sec) * 1.0e3 + (end.tv_nsec - start.tv_nsec) * 1.0e-6;
-	printf("The elapsed time (ms) is %lu \n", delta_ms);
+	printf("The elapsed time (ms) is %lu \n\n", delta_ms);
 	// uint64_t delta_us = (end.tv_sec - start.tv_sec) * 1.0e6 + (end.tv_nsec - start.tv_nsec) * 1.0e-3;
 	// printf("The elapsed time (us) is %lu \n", delta_us);
 	// uint64_t delta_s = (end.tv_sec - start.tv_sec);
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC_RAW, &endBubble);
 	printf("End timing bubble sort.\n");
 	delta_ms = (endBubble.tv_sec - startBubble.tv_sec) * 1.0e3 + (endBubble.tv_nsec - startBubble.tv_nsec) * 1.0e-6;
-	printf("The elapsed time (ms) is %lu \n", delta_ms);
+	printf("The elapsed time (ms) is %lu \n\n", delta_ms);
 
 	verifySortResults(pInputArray, resultArray, num_integers); // Replace YOUR_ARRAY by your array name
 

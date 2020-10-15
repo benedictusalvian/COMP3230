@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
 		{
 			printf("Receive a SIGCONT.\n");
 			printf("Child process ID: %d.\n", getpid());
-			differ = shmat(shmid, 0, 0);
 			differ[2] = differ[0] + differ[1];
 			printf("Sum of differences: %d.\n\n", differ[2]);
 			return 0;

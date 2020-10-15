@@ -250,7 +250,6 @@ void mergesort4Way4Processes(int *array, int low, int high)
         exit(-1);
     else if (pid2 == 0)
     {
-        sharedArray = shmat(shmid, 0, 0);
         mergesort_4_way_rec(sharedArray, low, mid1);
         printf("Process ID: %d; Sorted %d integers: ", getpid(), mid1 - low);
         printArray(sharedArray, low, mid1);
@@ -264,7 +263,6 @@ void mergesort4Way4Processes(int *array, int low, int high)
             exit(-1);
         else if (pid3 == 0)
         {
-            sharedArray = shmat(shmid, 0, 0);
             mergesort_4_way_rec(sharedArray, mid1, mid2);
             printf("Process ID: %d; Sorted %d integers: ", getpid(), mid2 - mid1);
             printArray(sharedArray, mid1, mid2);
@@ -278,7 +276,6 @@ void mergesort4Way4Processes(int *array, int low, int high)
                 exit(-1);
             else if (pid4 == 0)
             {
-                sharedArray = shmat(shmid, 0, 0);
                 mergesort_4_way_rec(sharedArray, mid2, mid3);
                 printf("Process ID: %d; Sorted %d integers: ", getpid(), mid3 - mid2);
                 printArray(sharedArray, mid2, mid3);
@@ -287,7 +284,7 @@ void mergesort4Way4Processes(int *array, int low, int high)
             else
             {
                 mergesort_4_way_rec(sharedArray, mid3, high);
-                printf("Process ID: %d; Sorted %d integers: ", getpid(), high - mid3);
+                printf("Process ID: %d; Merged %d integers: ", getpid(), high - low);
                 printArray(sharedArray, mid3, high);
 
                 wait(NULL);
