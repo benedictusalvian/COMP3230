@@ -320,7 +320,7 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
             exit(-1);
         else if (pid2 == 0)
         {
-            recursiveMergesort(array, mid1, mid2, max_num);
+            recursiveMergesort(array, low, mid1, max_num);
             exit(0);
         }
         else
@@ -329,7 +329,7 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
 
             if (pid3 == 0)
             {
-                recursiveMergesort(array, mid2, mid3, max_num);
+                recursiveMergesort(array, mid1, mid2, max_num);
                 exit(0);
             }
             else
@@ -338,12 +338,12 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
 
                 if (pid4 == 0)
                 {
-                    recursiveMergesort(array, mid3, high, max_num);
+                    recursiveMergesort(array, mid2, mid3, max_num);
                     exit(0);
                 }
                 else
                 {
-                    recursiveMergesort(array, low, mid1, max_num);
+                    recursiveMergesort(array, mid3, high, max_num);
 
                     wait(NULL);
                     wait(NULL);
