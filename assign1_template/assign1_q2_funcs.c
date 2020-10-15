@@ -352,8 +352,8 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
                     waitpid(pid4, NULL, 0);
 
                     merge_4_way(array, low, mid1, mid2, mid3, high);
-                    //printf("Process ID: %d; Merged %d integers: ", getpid(), size);
-                    //printArray(array, low, high);
+                    printf("Process ID: %d; Merged %d integers: ", getpid(), size);
+                    printArray(array, low, high);
                 }
             }
         }
@@ -361,8 +361,8 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
     else
     {
         mergesort_4_way_rec(array, low, high);
-        //printf("Process ID: %d; Sorted %d integers:", getpid(), (high - low));
-        //printArray(array, low, high);
+        printf("Process ID: %d; Sorted %d integers:", getpid(), (high - low));
+        printArray(array, low, high);
     }
 }
 
