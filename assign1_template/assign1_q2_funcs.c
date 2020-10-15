@@ -341,19 +341,16 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
                     recursiveMergesort(array, mid2, mid3, max_num);
                     exit(0);
                 }
-                else
-                {
-                    recursiveMergesort(array, mid3, high, max_num);
-
-                    wait(NULL);
-                    wait(NULL);
-                    wait(NULL);
-
-                    merge_4_way(array, low, mid1, mid2, mid3, high);
-                    //printf("Process ID: %d; Merged %d integers: ", getpid(), size);
-                    //printArray(array, low, high);
-                }
             }
+            recursiveMergesort(array, mid3, high, max_num);
+
+            wait(NULL);
+            wait(NULL);
+            wait(NULL);
+
+            merge_4_way(array, low, mid1, mid2, mid3, high);
+            //printf("Process ID: %d; Merged %d integers: ", getpid(), size);
+            //printArray(array, low, high);
         }
     }
     else
