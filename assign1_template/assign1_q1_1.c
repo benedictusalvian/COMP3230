@@ -43,6 +43,7 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
+			sleep(1);
 			printf("Parent process ID: %d.\n", getpid());
 
 			for (int i = 0; i < 2; i++)
