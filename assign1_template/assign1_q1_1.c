@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 			kill(fpid, SIGCONT);
 
 			wait(NULL);
-			printf("Exited Process ID: %d.\n", fpid);
+			printf("Exited Process ID: %d.", fpid);
 		}
 	}
 	printf("\nThis is the END of the program.\n");
