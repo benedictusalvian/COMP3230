@@ -230,26 +230,27 @@ void mergesort4Way4Processes(int *array, int low, int high)
     pid_t ppid = getpid();
     pid_t pid2, pid3, pid4;
     int shmid;
-    int *pArray;
+    int *sharedArray;
 
     shmid = shmget(IPC_PRIVATE, (high - low) * sizeof(int), 0666 | IPC_CREAT);
-    pArray = shmat(shmid, 0, 0);
+    sharedArray = shmat(shmid, 0, 0);
 
     for (int i = low; i < high; i++)
-        pArray[i] = array[i];
+        sharedArray[i] = array[i];
 
-    int mid1 = (high - low) / 4;
-    int mid2 = (high - low) / 2;
-    int mid3 = mid1 + mid2;
+    int step = high - low;
+    int mid1 = low + step;
+    int mid2 = low + 2 * step;
+    int mid3 = low + 3 * step;
 
     pid2 = fork();
 
     if (pid2 == 0)
     {
-        pArray = shmat(shmid, 0, 0);
-        mergesort_4_way_rec(pArray, low, mid1);
+        sharedArray = shmat(shmid, 0, 0);
+        mergesort_4_way_rec(sharedArray, low, mid1);
         printf("Process ID: %d; Sorted %d integers: ", getpid(), mid1 - low);
-        printArray(pArray, low, mid1);
+        printArray(sharedArray, low, mid1);
     }
     else
     {
@@ -257,10 +258,10 @@ void mergesort4Way4Processes(int *array, int low, int high)
 
         if (pid3 == 0)
         {
-            pArray = shmat(shmid, 0, 0);
-            mergesort_4_way_rec(pArray, mid1, mid2);
+            sharedArray = shmat(shmid, 0, 0);
+            mergesort_4_way_rec(sharedArray, mid1, mid2);
             printf("Process ID: %d; Sorted %d integers: ", getpid(), mid2 - mid1);
-            printArray(pArray, mid1, mid2);
+            printArray(sharedArray, mid1, mid2);
         }
         else
         {
@@ -268,31 +269,31 @@ void mergesort4Way4Processes(int *array, int low, int high)
 
             if (pid4 == 0)
             {
-                pArray = shmat(shmid, 0, 0);
-                mergesort_4_way_rec(pArray, mid2, mid3);
+                sharedArray = shmat(shmid, 0, 0);
+                mergesort_4_way_rec(sharedArray, mid2, mid3);
                 printf("Process ID: %d; Sorted %d integers: ", getpid(), mid3 - mid2);
-                printArray(pArray, mid2, mid3);
+                printArray(sharedArray, mid2, mid3);
             }
             else
             {
-                mergesort_4_way_rec(pArray, mid3, high);
+                mergesort_4_way_rec(sharedArray, mid3, high);
                 printf("Process ID: %d; Sorted %d integers: ", getpid(), high - mid3);
-                printArray(pArray, mid3, high);
+                printArray(sharedArray, mid3, high);
 
                 waitpid(pid2, NULL, 0);
                 waitpid(pid3, NULL, 0);
                 waitpid(pid4, NULL, 0);
 
-                merge_4_way(pArray, low, mid1, mid2, mid3, high);
+                merge_4_way(sharedArray, low, mid1, mid2, mid3, high);
 
                 for (int i = low; i < high; i++)
-                    array[i] = pArray[i];
+                    array[i] = sharedArray[i];
             }
         }
     }
 
     if (getpid() != ppid)
-        exit(0);
+        return;
 }
 
 void recursiveMergesort(int *array, int low, int high, int max_num)
