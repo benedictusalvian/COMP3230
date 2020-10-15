@@ -6,6 +6,12 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
+void childCONT(int signal)
+{
+	printf("Receive a SIGCONT.\n");
+	printf("Child process ID: %d.\n", getpid());
+}
+
 int main(int argc, char *argv[])
 {
 	printf("This is the BEGINNING of the program.\n\n");
@@ -29,6 +35,7 @@ int main(int argc, char *argv[])
 
 		if (fpid == 0)
 		{
+			signal(SIGCONT, childCONT);
 			printf("Receive a SIGCONT.\n");
 			printf("Child process ID: %d.\n", getpid());
 			differ[2] = differ[0] + differ[1];
