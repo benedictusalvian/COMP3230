@@ -314,8 +314,6 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
         int mid2 = mid1 + step;
         int mid3 = mid2 + step;
 
-        recursiveMergesort(array, low, mid1, max_num);
-
         pid2 = fork();
 
         if (pid2 < 0)
@@ -345,6 +343,8 @@ void recursiveMergesort(int *array, int low, int high, int max_num)
                 }
                 else
                 {
+                    recursiveMergesort(array, low, mid1, max_num);
+
                     wait(NULL);
                     wait(NULL);
                     wait(NULL);
