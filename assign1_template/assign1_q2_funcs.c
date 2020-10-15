@@ -239,9 +239,9 @@ void mergesort4Way4Processes(int *array, int low, int high)
         sharedArray[i] = array[i];
 
     int step = (high - low) / 4;
-    int mid1 = low + step;
-    int mid2 = low + 2 * step;
-    int mid3 = low + 3 * step;
+    int mid1 = step;
+    int mid2 = mid1 + step;
+    int mid3 = mid2 + step;
 
     pid2 = fork();
 
