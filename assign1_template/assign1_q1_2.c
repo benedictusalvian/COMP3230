@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 				printf("Child process A ID: %d.\n", getpid());
 				differ = shmat(shmid, 0, 0);
 				differ[2] = differ[0] + differ[1];
-				printf("Sum of differences: %d.\n\n", differ[2]);
+				printf("Sum of differences: %d.\n", differ[2]);
 
 				printf("Send a SIGCONT to process %d.\n\n", fpidB);
 				kill(fpidB, SIGCONT);
