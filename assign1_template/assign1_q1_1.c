@@ -6,10 +6,9 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-void childCONT(int signal)
+void childCONT(int signum)
 {
 	printf("Receive a SIGCONT.\n");
-	printf("Child process ID: %d.\n", getpid());
 }
 
 int main(int argc, char *argv[])
@@ -36,7 +35,7 @@ int main(int argc, char *argv[])
 		if (fpid == 0)
 		{
 			signal(SIGCONT, childCONT);
-			printf("Receive a SIGCONT.\n");
+			kill(getpid(), SIGSTOP);
 			printf("Child process ID: %d.\n", getpid());
 			differ[2] = differ[0] + differ[1];
 			printf("Sum of differences: %d.\n\n", differ[2]);
@@ -44,7 +43,6 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			kill(fpid, SIGSTOP);
 			printf("Parent process ID: %d.\n", getpid());
 
 			for (int i = 0; i < 2; i++)
