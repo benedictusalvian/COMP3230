@@ -292,7 +292,7 @@ void mergesort4Way4Processes(int *array, int low, int high)
     }
 
     if (getpid() != ppid)
-        return 0;
+        exit(0);
 }
 
 void recursiveMergesort(int *array, int low, int high, int max_num)
