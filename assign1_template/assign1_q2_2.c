@@ -5,6 +5,10 @@
 #include <stdint.h>
 #include <time.h>
 #include <unistd.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 int main(int argc, char *argv[])
 {
@@ -29,15 +33,19 @@ int main(int argc, char *argv[])
 	printArray(pInputArray, 0, num_integers);
 	printf("\n");
 
-	int *resultArray = (int *)malloc(num_integers * sizeof(int));
+	int size_data = num_integers * sizeof(int);
+
+	int shmid = shmget(IPC_PRIVATE, size_data, 0666 | IPC_CREAT);
+	int *shmArray = shmat(shmid, 0, 0);
+
 	for (int i = 0; i < num_integers; i++)
-		resultArray[i] = pInputArray[i];
+		shmArray[i] = pInputArray[i];
 
 	struct timespec start, end;
 	printf("Start timing parallel 4-way merge-sort...\n");
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 
-	recursiveMergesort(resultArray, 0, num_integers, max_num);
+	recursiveMergesort(shmArray, 0, num_integers, max_num);
 
 	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 	printf("End timing parallel 4-way merge-sort.\n");
@@ -59,10 +67,11 @@ int main(int argc, char *argv[])
 	delta_ms = (endBubble.tv_sec - startBubble.tv_sec) * 1.0e3 + (endBubble.tv_nsec - startBubble.tv_nsec) * 1.0e-6;
 	printf("The elapsed time (ms) is %lu \n\n", delta_ms);
 
-	verifySortResults(pInputArray, resultArray, num_integers); // Replace YOUR_ARRAY by your array name
+	verifySortResults(pInputArray, shmArray, num_integers); // Replace YOUR_ARRAY by your array name
 
 	free(pInputArray);
-	free(resultArray);
+	shmdt(shmArray);
+	shmctl(shmid, IPC_RMID, NULL);
 	printf("This is the END of the program.\n");
 	return 0;
 }
