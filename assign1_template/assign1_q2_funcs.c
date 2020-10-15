@@ -238,7 +238,7 @@ void mergesort4Way4Processes(int *array, int low, int high)
     for (int i = low; i < high; i++)
         sharedArray[i] = array[i];
 
-    int step = high - low;
+    int step = (high - low) / 4;
     int mid1 = low + step;
     int mid2 = low + 2 * step;
     int mid3 = low + 3 * step;
