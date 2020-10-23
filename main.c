@@ -8,25 +8,24 @@
 
 int main()
 {
-    int count = 0;
+    int count = 0; // parentCount = 0
     pid_t pid1, pid2;
-    pid1 = fork();
-    count++;
+    pid1 = fork(); // parentCount = 0, pid1Count = 0
+    count++;       // parentCount = 1, pid1Count = 1
     if (pid1 == 0)
     {
-        pid2 = fork();
-        count++;
+        pid2 = fork(); // pid1Count = 1, pid2Count = 1
+        count++;       // pid1Count = 2, pid2Count = 2
         if (pid2 == 0)
         {
-            count = count + 10;
-            printf("I am pid2, count is %d\n", count);
-            exit(0);
+            count = count + 10; // pid2Count = 12. NOT DISPLAYED.
+            exit(0);            // pid2 exits and will never print "Hello world!" and count.
         }
     }
     else
     {
-        count++;
+        count++; // parentCount = 2
     }
-    printf("Hello world!\n");
-    printf("Count is %d\n", count);
+    printf("Hello world!\n");       // Parent and child process pid1 prints this.
+    printf("Count is %d\n", count); // Parent and child process pid1 prints this.
 }
