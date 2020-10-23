@@ -41,6 +41,7 @@ int main()
         for (i = 0; i < 10; i++)
         {
             // F
+            waitpid(pid, &status, WUNTRACED);
 
             a[i] = i;
             printf("Parent at iteration %d, writes a[%d] = %d.\n", i, i, a[i]);
@@ -48,7 +49,7 @@ int main()
             kill(pid, SIGCONT);
         }
         // H
-        wait(NULL);
+	wait(NULL);
         shmdt(a);
         shmctl(shmid, IPC_RMID, NULL);
     }
