@@ -19,7 +19,7 @@ int main()
     if (pid == 0)
     { // Child
         // B
-        b = shmat(shmid, 0, 0);
+        b = (int *)shmat(shmid, 0, 0);
 
         for (i = 0; i < 10; i++)
         {
@@ -35,7 +35,7 @@ int main()
     else
     { // Parent
         // E
-        a = shmat(shmid, 0, 0);
+        a = (int *)shmat(shmid, 0, 0);
 
         sleep(1);
         for (i = 0; i < 10; i++)
