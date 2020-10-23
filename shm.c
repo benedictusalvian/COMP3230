@@ -41,11 +41,11 @@ int main()
         for (i = 0; i < 10; i++)
         {
             // F
-            kill(pid, SIGCONT);
 
             a[i] = i;
             printf("Parent at iteration %d, writes a[%d] = %d.\n", i, i, a[i]);
             // G
+            kill(pid, SIGCONT);
         }
         // H
         wait(NULL);
