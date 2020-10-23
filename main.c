@@ -26,6 +26,6 @@ int main()
     {
         count++;
     }
-    printf(“Hello world !\n”);
-    printf(“Count is % d\n”, count);
+    printf("Hello world!\n");
+    printf("Count is %d\n", count);
 }
