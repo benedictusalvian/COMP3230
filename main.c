@@ -19,7 +19,7 @@ int main()
         if (pid2 == 0)
         {
             count = count + 10;
-            print("I am pid2, count is %d\n", count);
+            printf("I am pid2, count is %d\n", count);
             exit(0);
         }
     }
