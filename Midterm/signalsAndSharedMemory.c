@@ -49,7 +49,7 @@ int main()
             kill(pid, SIGCONT);
         }
         // H
-	wait(NULL);
+        wait(NULL);
         shmdt(a);
         shmctl(shmid, IPC_RMID, NULL);
     }
