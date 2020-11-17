@@ -1,0 +1,17 @@
+When N is a small number such as 50, the compiler might optimize certain sections of code that
+results in undefined behaviour producing the final counter value of -100 most of the time.
+
+We are passing a pointer to the value of variable offset in main() to the counting_thread(). It is possible 
+that before successful assignment of 1 to int offset in counting_thread() to Thread 1, the value of offset in 
+main() has changed to -1. The value that is dereferenced by counting_thread() will thus be
+-1, and so both Thread 1 and 2 will have int offset in counting_thread() initialized to -1, producing the
+behaviour we encountered.
+
+This suspicion is further confirmed when sem_wait() and sem_post() were placed before and after
+the for-loop in counting_thread(). Even as N grows to 10 000 000, the behaviour persists, resulting in
+a final counter value of -20 000 000. This implies for small values of N, the value of int offset for
+both Thread 1 and 2 in counting_thread() is initialized to -1.
+
+To resolve this issue, we need to initialize a different variable for offset2 in main() to avoid
+counting_thread() dereferencing the wrong value and use semaphores before and after the
+for-loop in counting_thread().
