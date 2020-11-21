@@ -23,6 +23,8 @@ void queueDestroy(Queue q)
 {
   free(q->array);
   free(q);
+
+  //sem_destroy(&sem01);
 }
 
 int queueIsFull(Queue q)
